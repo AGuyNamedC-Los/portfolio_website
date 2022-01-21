@@ -1,8 +1,7 @@
-import * as THREE from 'three';
-// import * as THREE from 'https://unpkg.com/three/build/three.module.js';
+import './main.css'
+import * as THREE from 'three'
 // import * as dat from 'dat.gui'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 // gui
 // const gui = new dat.GUI();
@@ -14,7 +13,7 @@ const canvas = document.querySelector('canvas.webgl');
 const scene = new THREE.Scene();
 
 // texture loader
-// const textureLoader = new THREE.TextureLoader();
+const textureLoader = new THREE.TextureLoader();
 
 // gltf loader
 const gltfLoader = new GLTFLoader();
@@ -49,6 +48,92 @@ gltfLoader.load(
             if (o.isMesh) o.material = newMaterial;
         });
         gltf.scene.scale.set(1.1, 0.75, 0.75);
+        scene.add(gltf.scene);
+    }
+);
+
+// monitor
+gltfLoader.load(
+    'models/monitor/scene.gltf', (gltf) => {
+        let model = gltf.scene;
+        let newMaterial = new THREE.MeshStandardMaterial({roughness: 0.5});
+        model.traverse((o) => {
+            if (o.isMesh) o.material = newMaterial;
+        });
+        gltf.scene.scale.set(0.5, 0.5, 0.5);
+        gltf.scene.position.set(0.652, -1.1, 21);
+        gltf.scene.rotation.set(0.024, -3.135, 0);
+
+        scene.add(gltf.scene);
+    }
+);
+
+// screen
+const plane = new THREE.Mesh(
+    new THREE.PlaneGeometry(1, 1), 
+    new THREE.MeshStandardMaterial({side: THREE.DoubleSide})
+);
+plane.visible = true;
+plane.position.set(0.02, 1.11, -0.5);
+plane.rotation.set(0.014, 0 ,0);
+plane.scale.set(1.89, 1.25, 1);
+scene.add(plane);
+
+// tower
+gltfLoader.load(
+    'models/tower/scene.gltf', (gltf) => {
+        gltf.scene.position.set(2.123, 0.527, 0.141);
+        gltf.scene.rotation.set(0, 0.046, -0.012);
+        gltf.scene.scale.set(.6, 0.6, 0.6);
+        let model = gltf.scene;
+        let newMaterial = new THREE.MeshStandardMaterial({roughness: 0.5, metalness: 0.5});
+        model.traverse((o) => {
+            if (o.isMesh) o.material = newMaterial;
+        });
+        scene.add(gltf.scene);
+    }
+);
+
+// keyboard
+gltfLoader.load(
+    'models/keyboard/scene.gltf', (gltf) => {
+        gltf.scene.scale.set(0.2, 0.2, 0.2);
+        gltf.scene.position.set(0, 0.09, 0.42);
+        gltf.scene.rotation.set(0.2, -3.13, 0);
+        let model = gltf.scene;
+        let newMaterial = new THREE.MeshStandardMaterial();
+        model.traverse((o) => {
+            if (o.isMesh) o.material = newMaterial;
+        });
+        scene.add(gltf.scene);
+    }
+);
+
+// mouse
+gltfLoader.load(
+    'models/mouse/scene.gltf', (gltf) => {
+        gltf.scene.scale.set(0.4, 0.4, 0.4);
+        gltf.scene.position.set(1.02, 0.03, 0.4);
+        let model = gltf.scene;
+        let newMaterial = new THREE.MeshStandardMaterial();
+        model.traverse((o) => {
+            if (o.isMesh) o.material = newMaterial;
+        });
+        scene.add(gltf.scene);
+    }
+);
+
+// chair
+gltfLoader.load(
+    'models/chair/scene.gltf', (gltf) => {
+        gltf.scene.position.set(1.5, -2.2, 1.96);
+        gltf.scene.rotation.set(0, -2.18, 0);
+        gltf.scene.scale.set(0.7, 0.7, 0.7);
+        let model = gltf.scene;
+        let newMaterial = new THREE.MeshStandardMaterial();
+        model.traverse((o) => {
+            if (o.isMesh) o.material = newMaterial;
+        });
         scene.add(gltf.scene);
     }
 );
@@ -104,9 +189,9 @@ camera.position.set(0, 1.18, 0);
 scene.add(camera);
 
 // Controls
-const controls = new OrbitControls(camera, canvas);
-controls.enableDamping = true;
-controls.campingFactor = 0.25;
+// const controls = new OrbitControls(camera, canvas);
+// controls.enableDamping = true;
+// controls.campingFactor = 0.25;
 
 /**
  * Renderer
@@ -122,6 +207,55 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 /**
  * Animate
  */
+const raycaster = new THREE.Raycaster();
+
+window.addEventListener('scroll', () => {
+    const t = document.body.getBoundingClientRect().top;
+    camera.position.z = t * -0.0015;
+    camera.rotation.x = t * 0.00022;
+    camera.position.y = 1.2 + t * -0.0002;
+})
+
+const mouse = new THREE.Vector2();
+window.addEventListener('mousemove', (event) => {
+    mouse.x = (event.clientX / sizes.width) * 2 - 1;
+    camera.position.x = mouse.x/2;
+    camera.rotation.y = mouse.x/20;
+});
+
+// get all link elements and make it so an image appears on the monitor
+var projects = document.querySelectorAll("a.project.link");
+projects.forEach((p, i) => {
+    p.addEventListener("mouseover", () => {
+        plane.visible = true;
+        let newMaterial = new THREE.MeshBasicMaterial({
+            map: textureLoader.load(`/textures/projects/${i}.png`)
+        });
+        plane.material = newMaterial;
+    });
+});
+
+projects.forEach((p) => {
+    p.addEventListener("mouseout", () => {
+        plane.visible = false;
+});});
+
+var socials = document.querySelectorAll("a.social.link");
+socials.forEach((s, i) => {
+    s.addEventListener("mouseover", () => {
+        plane.visible = true;
+        plane.material = new THREE.MeshBasicMaterial({
+            map: textureLoader.load(`/textures/socials/${i}.png`)
+        });
+    });
+});
+
+socials.forEach((s) => {
+    s.addEventListener("mouseout", () => {
+        plane.visible = false;
+    })
+});
+
 
 const clock = new THREE.Clock()
 const tick = () => {
@@ -130,7 +264,7 @@ const tick = () => {
     // Update objects
 
     // Update Orbital Controls
-    controls.update();
+    // controls.update();
 
     // Render
     renderer.render(scene, camera)

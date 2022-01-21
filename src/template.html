@@ -2,14 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ThreeJS Starter</title>
 </head>
 <body>
     <canvas class="webgl"></canvas>
     <main>
-        <p>hello</p>
+        <section class="page">
+            <div class="page-1">
+                <div class="title"><span class="color-bar"></span><h1 style="height: 0">Carlos Castillo</h1></div>
+                <div class="title"><span class="color-bar"></span><h2>Software Engineer</h2></div>
+            </div>
+        </section>
+        <section class="page">
+            <article class="page-2">
+                <div class="title"><span class="color-bar"></span><h1>Projects</h1></div>
+                
+                <div id="projects" class="link-container">
+                    <a class="project link" href="https://gift-ee.herokuapp.com/" target="_blank"><span class="grow color-bar"></span><p>Giftee</p></a>
+                    <a class="project link" href="https://pathfinder-interactive.herokuapp.com/" target="_blank"><span class="grow color-bar"></span><p>Pathfinder</p></a>
+                    <a class="project link" href="https://carlos-castillo-portfolio.herokuapp.com/" href="_blank"><span class="grow color-bar"></span><p>Portfolio Website</p></a>
+                    <a class="project link" href="https://text-mockify.herokuapp.com/" target="_blank"><span class="grow color-bar"></span><p>Text-Mockify</p></a>
+                    <a class="project link" href="https://github.com/AGuyNamedC-Los/data_structures/blob/master/AVL_Tree/AVL_Tree.cs" target="_blank"><span class="grow color-bar"></span><p>AVL Tree</p></a>
+                    <a class="project link" href="https://github.com/AGuyNamedC-Los/data_structures/tree/master/DoublyLinkedList" target="_blank"><span class="grow color-bar"></span><p>Doubly Linked List</p></a>
+                </div>
+                <div class="title"><span class="color-bar"></span><h1>Socials</h1></div>
+                <div class="link-container">
+                    <a class="social link" href="https://docs.google.com/document/d/1IhqVH2U63V9J9llKZ8vqH0ucD6I9_AItPzbLe4pmJqQ/edit?usp=sharing" target="_blank"><span class="grow color-bar"></span><p>Resume</p></a>
+                    <a class="social link" href="https://www.linkedin.com/in/carlos-castillo-1363a6133/" target="_blank"><span class="grow color-bar"></span><p>LinkedIn</p></a>
+                    <a class="social link" href="https://github.com/AGuyNamedC-Los" target="_blank"><span class="grow color-bar"></span><p>GitHub</p></a>
+                </div>
+            </article>
+        </section>
+        <section class="page">
+            <article class="page-3">
+                <div class="title"><span class="color-bar"></span><h1>About Me</h1></div>
+                <p class="about-me">
+                    Hello! I graduated California State University East Bay with a Bachelors in Computer Science that
+                    is currently looking for a position in software engineering. Feel free
+                    to contact me through email or Linkedin or play around with any of the projects
+                    that I've created!
+                </p>
+            </article>
+        </section>
     </main>
+    <script>
+        window.onbeforeunload = () => window.scrollTo(0, 0);
+    </script>
 </body>
 </html>
