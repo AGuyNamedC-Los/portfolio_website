@@ -22,7 +22,46 @@ html::-webkit-scrollbar { /* WebKit */
     height: 0;
 }
 
-main {position: absolute;}
+/* #loading-screen {
+	position: absolute;
+	z-index: 2;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #202734;
+} */
+
+#loading-screen {
+    position: absolute;
+    z-index: 2;
+    background-color: #202734;
+    width: 100%;
+    height: 100%;
+}
+
+#loading-progress {
+    position: absolute;
+    display: flex;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+#loading-progress i {
+    margin: 0 1rem;
+    font-size: 5rem;
+    animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+main {display: none; position: absolute;}
 h1 {font-size: 5rem;}
 h2 {font-size: 3rem;}
 

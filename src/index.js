@@ -9,6 +9,14 @@ import Renderer from './components/renderer';
 
 import { showImageOnMonitor, removeImageOnMonitor } from './components/eventListeners/monitorScreen';
 
+THREE.DefaultLoadingManager.onLoad = () => {
+    let loadingScreen = document.getElementById("loading-screen");
+    let main = document.getElementsByTagName("main")[0];
+
+    loadingScreen.style.display = "none";
+    main.style.display = "initial";
+}
+
 const canvas = document.querySelector('canvas.webgl');
 // Window sizes
 const sizes = { 
@@ -71,11 +79,6 @@ removeImageOnMonitor(socials, objects.panel);
 const clock = new THREE.Clock()
 const tick = () => {
     const elapsedTime = clock.getElapsedTime()
-
-    // Update objects
-
-    // Update Orbital Controls
-    // controls.update();
 
     // Render
     renderer.render(scene, camera);
