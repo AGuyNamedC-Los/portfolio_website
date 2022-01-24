@@ -9,14 +9,6 @@ import Renderer from './components/renderer';
 
 import { showImageOnMonitor, removeImageOnMonitor } from './components/eventListeners/monitorScreen';
 
-THREE.DefaultLoadingManager.onLoad = () => {
-    let loadingScreen = document.getElementById("loading-screen");
-    let main = document.getElementsByTagName("main")[0];
-
-    loadingScreen.style.display = "none";
-    main.style.display = "initial";
-}
-
 const canvas = document.querySelector('canvas.webgl');
 // Window sizes
 const sizes = { 
@@ -30,9 +22,19 @@ const camera = new Camera(sizes);       // creates a new camera
 const objects = new Objects(scene);         // loads all the three js objects onto the scene
 const gltfModels = new GLTFModels(scene);      // loads all the gltf models onto the scene
 const lights = new Lights(scene);          // loads all the lights onto the scene
+let raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+const renderer = new Renderer(canvas, sizes);
+
+THREE.DefaultLoadingManager.onLoad = () => {
+    let loadingScreen = document.getElementById("loading-screen");
+    let main = document.getElementsByTagName("main")[0];
+
+    loadingScreen.style.display = "none";
+    main.style.display = "initial";
+}
 
 scene.add(camera);
-const renderer = new Renderer(canvas, sizes);
 
 window.addEventListener('resize', () => {
     // Update sizes
@@ -61,9 +63,9 @@ window.addEventListener('scroll', () => {
 })
 
 // makes camera pan left and right when moving mouse left to right
-const mouse = new THREE.Vector2();
 window.addEventListener('mousemove', (event) => {
     mouse.x = (event.clientX / sizes.width) * 2 - 1;
+    mouse.y = -(event.clientY / sizes.height) * 2 + 1;
     camera.position.x = mouse.x/2;
     camera.rotation.y = mouse.x/20;
 });
@@ -75,10 +77,22 @@ removeImageOnMonitor(projects, objects.panel);
 showImageOnMonitor(socials, objects.panel);
 removeImageOnMonitor(socials, objects.panel);
 
-
 const clock = new THREE.Clock()
 const tick = () => {
     const elapsedTime = clock.getElapsedTime()
+
+    // Raycaster
+    raycaster.setFromCamera(mouse, camera);
+    let intersects = raycaster.intersectObjects(scene.children);
+
+    for (const intersect of intersects) {
+        // when mouse is hovering the base, make the ss logo rotate
+        if (intersect.object.name == "base") {
+            scene.getObjectByName("superSeed").rotation.y += 0.01;
+            // scene.getObjectByName("superSeedLight").target = scene.getObjectByName("superSeed");
+        }
+    }
+
 
     // Render
     renderer.render(scene, camera);

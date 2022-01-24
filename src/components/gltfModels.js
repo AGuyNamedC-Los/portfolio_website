@@ -6,13 +6,28 @@ export default class GLTFModels {
         this.scene = scene;
         this.gltfLoader = new GLTFLoader();
         this.textureLoader = new THREE.TextureLoader();
+        this.list = [];
+        this.desk;
+        this.statueBase;
+        this.superSeed;
 
+        this.addGLTFModelsToScene();
+        this.assignModels();
+    }
+
+    addGLTFModelsToScene() {
         this.desk();
         this.monitor();
         this.tower();
         this.keyboard();
         this.mouse();
         this.chair();
+        this.statueBase();
+        this.superSeed();
+    }
+
+    assignModels() {
+        this.superSeed = this.list[this.length - 1];
     }
 
     desk() {
@@ -105,6 +120,50 @@ export default class GLTFModels {
                     if (o.isMesh) o.material = newMaterial;
                 });
                 this.scene.add(gltf.scene);
+            }
+        );
+    }
+
+    statueBase() {
+        this.gltfLoader.load(
+            'models/statue_base/scene.gltf', (gltf) => {
+                let model = gltf.scene;
+                model.position.set(-2, 0, 0);
+                model.rotation.set(0, 0, 0);
+                model.scale.set(0.1, 0.2, 0.1);
+                let newMaterial = new THREE.MeshStandardMaterial();
+                model.name = 'base';
+
+                model.traverse((o) => {
+                    o.name = 'base';
+                    if (o.isMesh) {
+                        o.material = newMaterial;
+                    }
+                });
+                this.scene.add(model);
+                this.list.push(model);
+            }
+        );
+    }
+
+    superSeed() {
+        this.gltfLoader.load(
+            'models/super_seed/scene.gltf', (gltf) => {
+                let model = gltf.scene;
+                model.position.set(-2, 0.3, 0);
+                model.rotation.set(0, 0, 0);
+                model.scale.set(5, 5, 2);
+                model.name = 'superSeed';
+                let newMaterial = new THREE.MeshStandardMaterial();
+
+                model.traverse((o) => {
+                    o.name = 'superSeed';
+                    if (o.isMesh) {
+                        o.material = newMaterial;
+                    }
+                });
+                this.scene.add(model);
+                this.list.push(model);
             }
         );
     }
