@@ -11,7 +11,7 @@ To have more of an online precense and means for people to contact me and view m
 * Javascript
 * [Threejs](https://threejs.org/) - is a 3D library that tries to make it as easy as possible to get 3D content on a webpage
 * [Webpack](https://webpack.js.org/) - is a static module bundler for modern JavaScript applications.
-* Heroku
+* [Heroku](https://www.heroku.com/nodejs) - Heroku is a cloud platform that lets companies build, deliver, monitor and scale apps
 * HTML5
 * CSS3
 
