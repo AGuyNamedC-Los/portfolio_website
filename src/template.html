@@ -23,6 +23,40 @@
     <meta property="og:description" content="Interactive website portfolio displaying links to relevant project and information about me."/>
     <title>Carlos Castillo - Software Engineer</title>
 </head>
+
+<style>
+#loading-screen {
+    position: absolute;
+    z-index: 2;
+    background-color: #202734;
+    width: 100%;
+    height: 100%;
+}
+
+#loading-progress {
+    position: absolute;
+    display: flex;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+main {display: none; position: absolute;}
+
+#loading-progress i {
+    margin: 0 1rem;
+    font-size: 5rem;
+    animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+</style>
+
 <body>
     <canvas class="webgl"></canvas>
     <section id="loading-screen">
