@@ -32,6 +32,7 @@ THREE.DefaultLoadingManager.onLoad = () => {
 
     loadingScreen.style.display = "none";
     main.style.display = "initial";
+    canvas.style.display = "initial";
 }
 
 scene.add(camera);

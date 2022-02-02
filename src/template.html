@@ -25,6 +25,9 @@
 </head>
 
 <style>
+main {display: none; position: absolute;}
+canvas { display: none; }
+
 #loading-screen {
     position: absolute;
     z-index: 2;
@@ -42,8 +45,6 @@
     transform: translate(-50%, -50%);
 }
 
-main {display: none; position: absolute;}
-
 #loading-progress i {
     margin: 0 1rem;
     font-size: 5rem;
@@ -58,7 +59,6 @@ main {display: none; position: absolute;}
 </style>
 
 <body>
-    <canvas class="webgl"></canvas>
     <section id="loading-screen">
         <div id="loading-progress">
             <i class="fas fa-cog"></i>
@@ -66,6 +66,7 @@ main {display: none; position: absolute;}
             <i class="fas fa-cog"></i>
         </div>
     </section>
+    <canvas class="webgl"></canvas>
     <main>
         <section class="page">
             <div class="page-1">
